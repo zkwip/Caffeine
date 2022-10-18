@@ -1,21 +1,25 @@
-﻿using System;
+﻿using Cocona;
+using System;
+using System.Media;
 using System.Threading;
-using System.Windows;
-using System.Windows.Input;
 
 namespace Caffeine
 {
     public class CaffeineManager
     {
-        private const int timeInterval = 1000;
-        private const KeyboardHandler.KeyCode wakingKey = KeyboardHandler.KeyCode.KEY_A;
-        private const string SoundLocation = "silence.wav";
+        private const int TIME_INTERVAL = 1000;
+        private const string SOUND_LOCATION = "sound.wav";
+        private const KeyboardHandler.KeyCode WAKE_KEY = KeyboardHandler.KeyCode.F15;
 
-        public CaffeineManager(bool keyboard, bool sound, bool startVisible)
+        private readonly SoundPlayer _player;
+
+        public CaffeineManager([Option("k")] bool keyboard = true, [Option("s")] bool sound = true, [Option("v")] bool visible = true)
         {
+            _player = new SoundPlayer(SOUND_LOCATION);
+
             KeyboardEnabled = keyboard;
             SoundEnabled = sound;
-            Visible = startVisible;
+            Visible = visible;
 
             Active = false;
         }
@@ -27,7 +31,7 @@ namespace Caffeine
             while(Active)
             {
                 HandleWakingActions();
-                Thread.Sleep(timeInterval);
+                Thread.Sleep(TIME_INTERVAL);
             }
         }
 
@@ -36,10 +40,10 @@ namespace Caffeine
             try
             {
                 if (KeyboardEnabled) 
-                    KeyboardHandler.Simulate(wakingKey);
+                    KeyboardHandler.Simulate(WAKE_KEY);
 
                 if (SoundEnabled) 
-                    SoundHandler.PlaySound(SoundLocation);
+                    _player.Play();
             }
             catch (Exception)
             {
@@ -56,5 +60,7 @@ namespace Caffeine
         public Exception LastException { get; private set; }
 
         public bool Visible { get; private set; }
+
+        static void Main(string[] args) => CoconaApp.Run<CaffeineManager>(args);
     }
 }
