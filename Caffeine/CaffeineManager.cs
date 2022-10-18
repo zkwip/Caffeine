@@ -7,7 +7,7 @@ namespace Caffeine
 {
     public class CaffeineManager
     {
-        private const int TIME_INTERVAL = 1000;
+        private const int TIME_INTERVAL = 2000;
         private const string SOUND_LOCATION = "sound.wav";
         private const KeyboardHandler.KeyCode WAKE_KEY = KeyboardHandler.KeyCode.F15;
 

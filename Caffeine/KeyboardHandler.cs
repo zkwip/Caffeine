@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Caffeine
 {
     /// <summary>
-    /// Modified version based on code by Chris Wirz
+    /// Modified version of a Keyboard press simulator using the user32 API, based on code by Chris Wirz
     /// https://www.chriswirz.com/software/using-the-windows-api-to-simulate-keyboard-input-in-c-sharp
     /// </summary>
     internal class KeyboardHandler
