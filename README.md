@@ -7,3 +7,4 @@ A .NET program that keeps your computer awake
  
 ## Planned features
  - Pinging a web adress, for phoning home or keeping connections alive
+ - UI to chance the modes
