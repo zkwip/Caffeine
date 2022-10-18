@@ -8,7 +8,7 @@ namespace Caffeine
     public class CaffeineManager
     {
         private const int timeInterval = 1000;
-        private const KeyboardHandler.KeyCode wakingKey = KeyboardHandler.KeyCode.F15;
+        private const KeyboardHandler.KeyCode wakingKey = KeyboardHandler.KeyCode.KEY_A;
         private const string SoundLocation = "silence.wav";
 
         public CaffeineManager(bool keyboard, bool sound, bool startVisible)
@@ -20,7 +20,7 @@ namespace Caffeine
             Active = false;
         }
 
-        public void Start()
+        public void Run()
         {
             Active = true;
 
