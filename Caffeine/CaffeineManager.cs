@@ -3,13 +3,13 @@ using System.Media;
 using System.Threading;
 using H.NotifyIcon.Core;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace Caffeine
 {
     public sealed class CaffeineManager
     {
         private const int TIME_INTERVAL = 2000;
-        private const string ICON_LOCATION = "TrayIcon.png";
         private const string SOUND_LOCATION = "silence.wav";
         private const KeyboardHandler.KeyCode WAKE_KEY = KeyboardHandler.KeyCode.F15;
 
@@ -41,7 +41,7 @@ namespace Caffeine
 
         private static Icon GenerateIconImage()
         {
-            return Icon.FromHandle(new Bitmap(ICON_LOCATION).GetHicon());
+            return Icon.ExtractAssociatedIcon("Caffeine.exe");
         }
 
         private PopupMenu GenerateContextMenu()
@@ -50,11 +50,6 @@ namespace Caffeine
             {
                 Items =
                 {
-                    new PopupMenuItem("Caffeine", (_,_)=>{ })
-                    {
-                        Enabled = false,
-                    },
-                    new PopupMenuSeparator(),
                     new PopupMenuItem("Enable Silence",(_,_) => ToggleSilence())
                     {
                         Checked = SoundEnabled
@@ -64,9 +59,17 @@ namespace Caffeine
                         Checked = KeyboardEnabled
                     },
                     new PopupMenuSeparator(),
-                    new PopupMenuItem("Quit",(_,_) => PressQuit())
+                    new PopupMenuItem("Quit",(_,_) => PressQuit()),
+                    new PopupMenuSeparator(),
+                    new PopupMenuItem("Caffeine v1.0.0", (_,_) => { OpenUrl(@"https://github.com/zkwip/Caffeine"); }),
+                    new PopupMenuItem("\u00A9 Joep Bernards, 2022", (_,_) => { OpenUrl(@"https://github.com/zkwip"); })
                 }
             };
+        }
+
+        private static void OpenUrl(string url)
+        {
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
 
         private void PressQuit()

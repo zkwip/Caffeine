@@ -5,23 +5,19 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>disable</Nullable>
     <StartupObject>Caffeine.CaffeineManager</StartupObject>
+    <ApplicationIcon>Caffeine.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Caffeine.ico" />
+    <Content Include="silence.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="H.NotifyIcon" Version="2.0.73" />
     <PackageReference Include="System.Windows.Extensions" Version="6.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="TrayIcon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="silence.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="sound.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
