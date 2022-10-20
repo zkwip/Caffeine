@@ -4,9 +4,7 @@ using System.Media;
 using System.Threading;
 using H.NotifyIcon.Core;
 using System.Windows;
-using H.NotifyIcon;
 using System.Drawing;
-using System.Windows.Controls;
 
 namespace Caffeine
 {
@@ -14,7 +12,7 @@ namespace Caffeine
     {
         private const int TIME_INTERVAL = 2000;
         private const string ICON_LOCATION = "TrayIcon.png";
-        private const string SOUND_LOCATION = "sound.wav";
+        private const string SOUND_LOCATION = "silence.wav";
         private const KeyboardHandler.KeyCode WAKE_KEY = KeyboardHandler.KeyCode.F15;
 
         private readonly SoundPlayer _player;
