@@ -4,62 +4,113 @@ using System.Media;
 using System.Threading;
 using H.NotifyIcon.Core;
 using System.Windows;
+using System.Drawing;
 
 namespace Caffeine
 {
     public sealed class CaffeineManager
     {
         private const int TIME_INTERVAL = 2000;
-        private const string SOUND_LOCATION = "sound.wav";
+        private const string ICON_LOCATION = "TrayIcon.png";
+        private const string SOUND_LOCATION = "silence.wav";
         private const KeyboardHandler.KeyCode WAKE_KEY = KeyboardHandler.KeyCode.F15;
 
         private readonly SoundPlayer _player;
-        private readonly TrayIcon _icon;
+        private readonly TrayIconWithContextMenu _icon;
 
-        public CaffeineManager([Option("k")] bool keyboard = true, [Option("s")] bool sound = true, [Option("v")] bool visible = true)
+        public CaffeineManager([Option("k")] bool keyboard = true, [Option("s")] bool sound = true)
         {
-            _player = new SoundPlayer(SOUND_LOCATION);
-
             KeyboardEnabled = keyboard;
             SoundEnabled = sound;
-            Visible = visible;
-
             Active = false;
-            _icon = new IconHandler(this).CreateTrayIcon();
 
-            Run();
+            _player = new SoundPlayer(SOUND_LOCATION);
+            _icon = CreateTrayIcon();
+        }
+
+        internal TrayIconWithContextMenu CreateTrayIcon()
+        {
+            var icon = new TrayIconWithContextMenu()
+            {
+                ContextMenu = GenerateContextMenu(),
+                Icon = GenerateIconImage().Handle,
+                ToolTip = "Caffeine",
+            };
+
+            icon.Create();
+            return icon;
+        }
+
+        private static Icon GenerateIconImage()
+        {
+            return Icon.FromHandle(new Bitmap(ICON_LOCATION).GetHicon());
+            //return IconGenerator.Generate(Brushes.Black, Brushes.White, new Pen(Color.White), baseImage: Bitmap.FromFile("Caffeine.png") , text: "C");
+        }
+
+        private PopupMenu GenerateContextMenu()
+        {
+            return new PopupMenu()
+            {
+                Items =
+                {
+                    new PopupMenuItem("Caffeine", (_,_)=>{ })
+                    {
+                        Enabled = false,
+                    },
+                    new PopupMenuSeparator(),
+                    new PopupMenuItem("Enable Silence",(_,_) => ToggleSilence())
+                    {
+                        Checked = SoundEnabled
+                    },
+                    new PopupMenuItem("Enable Keyboard",(_,_) => ToggleKeyboard())
+                    {
+                        Checked = KeyboardEnabled
+                    },
+                    new PopupMenuSeparator(),
+                    new PopupMenuItem("Quit",(_,_) => PressQuit())
+                }
+            };
+        }
+
+        private void PressQuit()
+        {
+            Active = false;
+        }
+
+        private void ToggleSilence()
+        {
+            SoundEnabled = !SoundEnabled;
+            _icon.ContextMenu = GenerateContextMenu();
+        }
+
+        private void ToggleKeyboard()
+        {
+            KeyboardEnabled = !KeyboardEnabled;
+            _icon.ContextMenu = GenerateContextMenu();
         }
 
         public void Run()
         {
             Active = true;
 
-            while(Active)
+            while (Active)
             {
                 Thread.Sleep(TIME_INTERVAL);
                 HandleWakingActions();
-
-                if (Visible) 
-                    SpawnWindow();
             }
+
+            //End
+
+            Close();
         }
 
-        private void SpawnWindow()
+        private void Close()
         {
-            var thread = new Thread(ShowWindow);
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            thread.Join();
-        }
+            _player.Stop();
+            _player.Dispose();
 
-        private void ShowWindow()
-        {
-            var window = new MainWindow(this);
-            window.ShowDialog();
-
-            Visible = false;
-            KeyboardEnabled = window.EnableKeys;
-            SoundEnabled = window.EnableSound;
+            _icon.Remove();
+            _icon.Dispose();
         }
 
         private void HandleWakingActions()
@@ -79,15 +130,11 @@ namespace Caffeine
             }
         }
 
-        public bool KeyboardEnabled { get; set; }
+        internal bool KeyboardEnabled { get; set; }
 
-        public bool SoundEnabled { get; set; }
+        internal bool SoundEnabled { get; set; }
 
-        public bool Active { get; set; }
-
-        public Exception LastException { get; private set; }
-
-        public bool Visible { get; set; }
+        internal bool Active { get; set; }
 
         [STAThread]
         static void Main(string[] args) => CoconaApp.Run<CaffeineManager>(args);
