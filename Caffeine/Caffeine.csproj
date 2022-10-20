@@ -6,10 +6,33 @@
     <Nullable>disable</Nullable>
     <StartupObject>Caffeine.CaffeineManager</StartupObject>
     <ApplicationIcon>Caffeine.ico</ApplicationIcon>
+    <PublisherName>Zkwip</PublisherName>
+    <ProductName>Caffeine</ProductName>
+    <AssemblyName>Caffeine</AssemblyName>
+    <Description>Keeps your PC awake</Description>
+    <Authors>Zkwip</Authors>
+    <Version>1.0.2</Version>
+    <Copyright>Zkwip, 2022</Copyright>
+    <WebPage>https://github.com/zkwip/Caffeine</WebPage>
+    <Title>Caffeine</Title>
+    <PackageProjectUrl>https://github.com/zkwip/Caffeine</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/zkwip/Caffeine</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>LICENSE</PackageReadmeFile>
+    <NeutralLanguage>en</NeutralLanguage>
+    <AssemblyVersion>1.0.2</AssemblyVersion>
+    <FileVersion>1.0.2</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Include="Caffeine.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
