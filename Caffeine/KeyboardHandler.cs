@@ -249,7 +249,7 @@ namespace Caffeine
 
         public static void Simulate(KeyCode keyCode)
         {
-            Input input = new Input
+            var input = new Input
             {
                 type = SendInputEventType.InputKeyboard,
                 mkhi = new MouseAndKeyboardInput
@@ -265,7 +265,7 @@ namespace Caffeine
                 }
             };
 
-            Input input2 = new Input
+            var input2 = new Input
             {
                 type = SendInputEventType.InputKeyboard,
                 mkhi = new MouseAndKeyboardInput

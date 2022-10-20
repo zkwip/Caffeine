@@ -3,7 +3,6 @@ using System;
 using System.Media;
 using System.Threading;
 using H.NotifyIcon.Core;
-using System.Windows;
 using System.Drawing;
 
 namespace Caffeine
@@ -44,7 +43,6 @@ namespace Caffeine
         private static Icon GenerateIconImage()
         {
             return Icon.FromHandle(new Bitmap(ICON_LOCATION).GetHicon());
-            //return IconGenerator.Generate(Brushes.Black, Brushes.White, new Pen(Color.White), baseImage: Bitmap.FromFile("Caffeine.png") , text: "C");
         }
 
         private PopupMenu GenerateContextMenu()
@@ -123,9 +121,8 @@ namespace Caffeine
                 if (SoundEnabled) 
                     _player.Play();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show(ex.Message);
                 Active = false;
             }
         }
