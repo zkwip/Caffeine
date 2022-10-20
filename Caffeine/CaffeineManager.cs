@@ -66,10 +66,9 @@ namespace Caffeine
                         Checked = KeyboardEnabled
                     },
                     new PopupMenuSeparator(),
-                    new PopupMenuItem("Quit",(_,_) => PressQuit()),
+                    new PopupMenuItem("About Caffeine", (_,_) => { OpenUrl(@"https://github.com/zkwip/Caffeine#how-to-use"); }),
                     new PopupMenuSeparator(),
-                    new PopupMenuItem("Caffeine v1.0.0", (_,_) => { OpenUrl(@"https://github.com/zkwip/Caffeine"); }),
-                    new PopupMenuItem("\u00A9 Joep Bernards, 2022", (_,_) => { OpenUrl(@"https://github.com/zkwip"); })
+                    new PopupMenuItem("Quit",(_,_) => PressQuit()),
                 }
             };
         }
