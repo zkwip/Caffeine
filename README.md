@@ -8,4 +8,3 @@ A simple .NET program that keeps your computer awake
  
 ## Planned features
  - Pinging a web adress, for phoning home or keeping connections alive
- - Cleaning up WPF related dependancies
