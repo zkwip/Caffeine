@@ -13,9 +13,8 @@ By default, no options are enabled, when you add the following arguments, the co
  - `k` turns on the keyboard feature which presses F15 every 2 seconds
  - `s` will play a silence through the active audio device, preventing some models from going into stand-by.
  
-The command "caffeine.exe -ks" will enable both the keyboard and silence feature; "caffeine.exe -s" will only enable silence.
+Running the command `caffeine.exe -ks` will enable both the keyboard and silence feature; "caffeine.exe -s" will only enable silence.
  
 ## Planned features
  - Pinging a web adress, for phoning home or keeping connections alive
  - Error messaging through the windows notifications
- 
