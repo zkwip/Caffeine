@@ -1,5 +1,4 @@
-﻿using Cocona;
-using System;
+﻿using System;
 using System.Media;
 using System.Threading;
 using H.NotifyIcon.Core;
@@ -17,7 +16,7 @@ namespace Caffeine
         private readonly SoundPlayer _player;
         private readonly TrayIconWithContextMenu _icon;
 
-        public CaffeineManager([Option("k")] bool keyboard = true, [Option("s")] bool sound = true)
+        public CaffeineManager(bool keyboard = true, bool sound = true)
         {
             KeyboardEnabled = keyboard;
             SoundEnabled = sound;
@@ -133,7 +132,21 @@ namespace Caffeine
 
         internal bool Active { get; set; }
 
-        [STAThread]
-        static void Main(string[] args) => CoconaApp.Run<CaffeineManager>(args);
+        static void Main(string[] args)
+        {
+            bool key = false;
+            bool sound = false;
+
+            foreach (string arg in args)
+            {
+                if (arg.Contains('k')) 
+                    key = true;
+
+                if (arg.Contains('s'))
+                    sound = true;
+            }
+
+            new CaffeineManager(key, sound).Run();
+        }
     }
 }
