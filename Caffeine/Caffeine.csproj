@@ -9,6 +9,7 @@
     <PublisherName>Zkwip</PublisherName>
     <ProductName>Caffeine</ProductName>
     <AssemblyName>Caffeine</AssemblyName>
+    <RootNamespace>Caffeine</RootNamespace>
     <Description>Keeps your PC awake</Description>
     <Authors>Zkwip</Authors>
     <Version>1.0.2</Version>
@@ -25,7 +26,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="tray.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Caffeine.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="tray.ico" />
   </ItemGroup>
 
   <ItemGroup>

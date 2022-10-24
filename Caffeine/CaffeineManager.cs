@@ -70,8 +70,9 @@ namespace Caffeine
 
         internal TrayIconWithContextMenu CreateTrayIcon()
         {
-            var icon = new TrayIconWithContextMenu()
-            {
+            var icon = new TrayIconWithContextMenu("zkwip.Caffeine")
+            { 
+                UseStandardTooltip = true,
                 ContextMenu = GenerateContextMenu(),
                 Icon = GenerateIconImage().Handle,
                 ToolTip = "Caffeine",
@@ -83,7 +84,19 @@ namespace Caffeine
 
         private static Icon GenerateIconImage()
         {
-            return Icon.ExtractAssociatedIcon("Caffeine.exe");
+            var icon = new Icon(GetResource("Caffeine.tray.ico"));
+            return icon;
+        }
+
+        private static Stream GetResource(string filename)
+        {
+            var ass = System.Reflection.Assembly.GetExecutingAssembly();
+            var file = ass.GetManifestResourceStream(filename);
+
+            if (file is null)
+                throw new FileNotFoundException($"Could not file embedded resource \"{filename}\" in resources.");
+
+            return file;
         }
 
         private PopupMenu GenerateContextMenu()
@@ -184,7 +197,7 @@ namespace Caffeine
 
             foreach (string arg in args)
             {
-                if (arg.Contains('k')) 
+                if (arg.Contains('k'))
                     key = true;
 
                 if (arg.Contains('s'))
@@ -192,6 +205,7 @@ namespace Caffeine
             }
 
             new CaffeineManager(key, sound).Run();
+            
         }
     }
 }
