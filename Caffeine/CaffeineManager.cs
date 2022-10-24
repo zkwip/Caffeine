@@ -58,6 +58,7 @@ namespace Caffeine
 
         private readonly SoundPlayer _player;
         private readonly TrayIconWithContextMenu _icon;
+        private static IntPtr _iconHandle;
 
         public CaffeineManager(bool keyboard = true, bool sound = true)
         {
@@ -65,26 +66,24 @@ namespace Caffeine
             SoundEnabled = sound;
             Active = false;
             _player = new SoundPlayer(new MemoryStream(SILENCE_F32));
+
+            _iconHandle = new Icon(GetResource("Caffeine.tray.ico")).Handle;
+
             _icon = CreateTrayIcon();
         }
 
         internal TrayIconWithContextMenu CreateTrayIcon()
         {
-            var icon = new TrayIconWithContextMenu("zkwip.Caffeine")
-            { 
+            var identifier = "Caffeine-" + System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var icon = new TrayIconWithContextMenu(identifier)
+            {
                 UseStandardTooltip = true,
                 ContextMenu = GenerateContextMenu(),
-                Icon = GenerateIconImage().Handle,
+                Icon = _iconHandle,
                 ToolTip = "Caffeine",
             };
 
             icon.Create();
-            return icon;
-        }
-
-        private static Icon GenerateIconImage()
-        {
-            var icon = new Icon(GetResource("Caffeine.tray.ico"));
             return icon;
         }
 
