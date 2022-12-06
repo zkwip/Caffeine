@@ -74,7 +74,8 @@ namespace Caffeine
 
         internal TrayIconWithContextMenu CreateTrayIcon()
         {
-            var identifier = "Caffeine-" + System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var identifier = "Caffeine-" + AppContext.BaseDirectory;
+            
             var icon = new TrayIconWithContextMenu(identifier)
             {
                 UseStandardTooltip = true,
